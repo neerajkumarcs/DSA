@@ -5,7 +5,7 @@
  *     ListNode *next;
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
- */
+ */ // nice question 
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
