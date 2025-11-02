@@ -29,11 +29,11 @@ ListNode* merge(ListNode* list1, ListNode* list2) {
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         if(lists.size()==0) return NULL;
         while(lists.size()>1){
-            ListNode* a=lists[lists.size()-1];
-            lists.pop_back();
-            ListNode* b=lists[lists.size()-1];
-            lists.pop_back();
-            ListNode* c=merge(a,b);
+            ListNode* a=lists[0];
+            lists.erase(lists.begin()); // yaha pe main pahle list ko vector se out krke erase kr rha hu
+            ListNode* b=lists[0];
+            lists.erase(lists.begin());// yaha pe main pahle list ko vector se out krke erase kr rha hu
+            ListNode* c=merge(a,b); 
             lists.push_back(c);
         }
         return lists[0];
