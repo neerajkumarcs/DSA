@@ -50,57 +50,15 @@ public:
         return newMidHead;
     }
     ListNode* reverseEvenLengthGroups(ListNode* head) {
-        if (!head || !head->next) return head;
-
-        ListNode dummy(0);
-        dummy.next = head;
-
-        ListNode* prevGroupEnd = &dummy;
-        ListNode* curr = head;
-        int groupSize = 1;
-
-        while (curr) {
-            // group start
-            ListNode* groupStart = curr;
-            int cnt = 0;
-
-            // current group ki actual length count karo
-            while (cnt < groupSize && curr) {
-                curr = curr->next;
-                cnt++;
-            }
-            // ab:
-            // groupStart = start of group
-            // cnt = group length
-            // curr = next group ka start
-
-            if (cnt % 2 == 0) {
-                // EVEN length group -> reverse karna hai
-                ListNode* prev = curr;    // reverse ke baad tail ka next ye hoga
-                ListNode* node = groupStart;
-
-                for (int i = 0; i < cnt; ++i) {
-                    ListNode* nxt = node->next;
-                    node->next = prev;
-                    prev = node;
-                    node = nxt;
-                }
-
-                // prev ab is group ka new head hai
-                prevGroupEnd->next = prev;
-                // old head (groupStart) ab tail ban gaya
-                prevGroupEnd = groupStart;
-            } else {
-                // ODD length group -> as-is chhodna hai
-                prevGroupEnd = groupStart;
-                for (int i = 1; i < cnt; ++i) {
-                    prevGroupEnd = prevGroupEnd->next;
-                }
-            }
-
-            groupSize++;
+        ListNode* temp=head;
+        int gap=1;
+        while(temp  && temp->next){
+               if(gap%2!=0) reverseBetween(temp, gap, gap+2);
+               for(int i=1; i<=gap; i++){
+                temp=temp->next;
+               }
+               gap++;
         }
-
-        return dummy.next;
+        return head;
     }
 };
