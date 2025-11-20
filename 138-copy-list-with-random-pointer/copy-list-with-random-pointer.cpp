@@ -19,7 +19,6 @@ public:
         Node* b = dub;
         Node* merge = new Node(100);
         Node* tempd = merge;
-        // safer merge: save next pointers and loop while both present
         while (a != nullptr && b != nullptr) {
             Node* nextA = a->next;
             Node* nextB = b->next;
@@ -42,7 +41,7 @@ public:
             Node* t2 = t1->next;
             if (t1->random) t2->random = t1->random->next;
             // move to next original node
-            t1 = t2->next;
+            t1 = t1->next->next;
         }
         // step 4 separating  the merged node
         t1 = merge; // reset t1 to start of merged list
