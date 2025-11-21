@@ -21,11 +21,8 @@ public:
        if(temp){
         dummy->next=temp;
         dummy=dummy->next;
+       }
        dummy->next=NULL;
-       }
-       else{
-        dummy->next=NULL;
-       }
        return newhead->next;
     }
 };
