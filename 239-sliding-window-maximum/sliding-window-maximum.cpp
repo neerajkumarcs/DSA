@@ -1,8 +1,7 @@
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& arr, int k) {
-        int n = arr.size();             
-        //if (n == 0 || k == 0) return {};
+        int n = arr.size();            
         if (k == 1) return arr;
         if (k > n) k = n;
 
