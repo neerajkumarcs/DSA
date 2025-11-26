@@ -1,23 +1,22 @@
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& arr, int k) {
-        int n = arr.size();                 // MUST be first
-
-        if (n == 0 || k == 0) return {};
+        int n = arr.size();             
+        //if (n == 0 || k == 0) return {};
         if (k == 1) return arr;
         if (k > n) k = n;
 
-        vector<int> ngi(n);                 // safe, portable
+        vector<int> ngi(n);     
         stack<int> st;
 
         // step1-> first to find next greater index
         ngi[n-1] = n;
         st.push(n-1);
         for (int i = n-2; i >= 0; i--) {
-            while (!st.empty() && arr[st.top()] <= arr[i]) { // correct pop
+            while (st.size()>0 && arr[st.top()] <= arr[i]) { 
                 st.pop();
             }
-            if (st.empty()) ngi[i] = n;
+            if (st.size()==0) ngi[i] = n;
             else ngi[i] = st.top();
             st.push(i);
         }
