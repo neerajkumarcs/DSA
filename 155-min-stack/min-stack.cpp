@@ -1,8 +1,8 @@
 class MinStack {
 public:
-    stack<int> st; // main stack 
-    stack<int>helper; // helper stack 
-    MinStack() { // constructor
+    stack<int> st; 
+    stack<int>helper; 
+    MinStack() { 
         
     }
     
