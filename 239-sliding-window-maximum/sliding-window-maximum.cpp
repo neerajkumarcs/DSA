@@ -1,12 +1,13 @@
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& arr, int k) {
-        int n = arr.size();                 
+        int n = arr.size();                 // MUST be first
+
         if (n == 0 || k == 0) return {};
         if (k == 1) return arr;
         if (k > n) k = n;
 
-        vector<int> ngi(n);                
+        vector<int> ngi(n);                 // safe, portable
         stack<int> st;
 
         // step1-> first to find next greater index
