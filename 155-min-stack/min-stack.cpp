@@ -15,7 +15,7 @@ public:
             st.push((long long)val);
         }
         else {
-            st.push((long long)(2LL*val - mn));   // FIX 1
+            st.push((long long)(2LL*val - mn));  
             mn=val;
         }
     }
@@ -25,7 +25,7 @@ public:
         st.pop();
        } 
        else {
-        long long oldmin = 2LL*mn - st.top();     // FIX 2
+        long long oldmin = 2LL*mn - st.top();    
         mn=oldmin;
         st.pop();
        }
@@ -33,7 +33,7 @@ public:
     
     int top() {
        if(st.top()>=mn) return (int)st.top();
-       else return (int)mn;                       // FIX 3
+       else return (int)mn;                       
     }
     
     int getMin() {
