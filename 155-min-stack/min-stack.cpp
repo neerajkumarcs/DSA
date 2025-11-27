@@ -33,10 +33,10 @@ public:
     
     int top() {
        if(st.top()>=mn) return (int)st.top();
-       else return (int)mn;                       
+       else return mn;                       
     }
     
     int getMin() {
-        return (int)mn;
+        return mn;
     }
 };
