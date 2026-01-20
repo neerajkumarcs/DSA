@@ -22,7 +22,7 @@ public:
         reverse(nums.begin() + pivotidx + 1, nums.end());
         // 4. Swap with just larger element (right to left)
         int i = pivotidx;
-        while (i <n) {
+        while (i!=n) {
             if (nums[i] > nums[pivotidx]) {
                 swap(nums[i], nums[pivotidx]);
                 break;
