@@ -1,20 +1,19 @@
 class Solution {
 public:
- void helper(TreeNode* root, string s, vector<string> &ans){
-    if(root==NULL) return ;
-    string ch=to_string(root->val);
-    if(root->left==NULL && root->right==NULL){
-        s+=ch;
-        ans.push_back(s);
-        return ;
+    void helper(TreeNode* root, string st, vector<string> &ans){
+        if(root==nullptr) return ;
+       string ch=to_string(root->val);
+        if(root->left==NULL && root->right==NULL){
+            st+=ch;// last node ko add kr rha hu kyoki append call mei ho rha, but last ke liye call nhi ho rha
+            ans.push_back(st);
+            return;
+        }
+       helper(root->left, st+ch+"->",ans);
+       helper(root->right,st+ch+"->", ans);
     }
-    helper(root->left, s+ch+"->", ans);
-    helper(root->right, s+ch+"->", ans);
-}
     vector<string> binaryTreePaths(TreeNode* root) {
-        vector<string> ans;
-        helper(root,"",ans);
-        return ans;
-        
+        vector<string>ans;
+       helper(root, "", ans);
+      return ans;  
     }
 };
