@@ -8,6 +8,6 @@ public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(exist(root->left,p) && exist(root->left,q))  return lowestCommonAncestor(root->left, p,q); // jab dono left mei ho
          if(exist(root->right,p) && exist(root->right,q)) return lowestCommonAncestor(root->right, p,q); // jab dono targets root ke right mei ho
-         return root; // means ek root ke left aur dusra right mei hoga , ya root hoga
+         return root; 
     }
 };
