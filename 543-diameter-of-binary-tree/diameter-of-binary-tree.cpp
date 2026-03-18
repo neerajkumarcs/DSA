@@ -9,7 +9,7 @@ int levels( TreeNode* root){
 }
     int diameterOfBinaryTree(TreeNode* root) {
         if(root==NULL) return 0;
-        int dia= levels(root->right)+levels(root->left);   
+        int dia= levels(root->right)+levels(root->left);
         maxdia=max(dia, maxdia);
         diameterOfBinaryTree(root->left);
         diameterOfBinaryTree(root->right);
