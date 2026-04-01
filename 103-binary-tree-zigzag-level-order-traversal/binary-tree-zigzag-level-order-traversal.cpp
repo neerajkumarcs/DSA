@@ -1,47 +1,36 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector<vector<int>> result;
-        if(root==NULL ) return result;
-        stack<TreeNode*> currlvl;
-        stack<TreeNode*> nxtlvl;
-        vector<int> lvl;// use to store every level
-        currlvl.push(root);
-        bool lefttoright=true;
-        while(!currlvl.empty()){
-            TreeNode* temp=currlvl.top();
-            lvl.push_back(temp->val);
-            currlvl.pop();
-            if(temp){
-                if(lefttoright){
-                    if(temp->left) nxtlvl.push(temp->left);
-                    if(temp->right) nxtlvl.push(temp->right);
-                }
-                else{
-                    if(temp->right) nxtlvl.push(temp->right);
-                    if(temp->left) nxtlvl.push(temp->left);
-                }
+        if(root == NULL) return {};
+
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        q.push(root);
+
+        bool lefttoright = true;
+
+        while(q.size() > 0){
+            vector<int> level;
+            int size = q.size();
+
+            for(int i = 0; i < size; i++){
+                TreeNode* temp = q.front();
+                q.pop();
+
+                level.push_back(temp->val);
+
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
             }
-                // after level
-                if(currlvl.empty()){
-                    result.push_back(lvl);
-                    lvl.clear(); // for resting the 1d vector
-                    lefttoright=!lefttoright;
-                    swap(currlvl,nxtlvl);
-            
-                }
+
+            if(!lefttoright){
+                reverse(level.begin(), level.end());
+            }
+
+            ans.push_back(level);
+            lefttoright = !lefttoright;
         }
-        return result;
+
+        return ans;
     }
 };
