@@ -6,6 +6,7 @@ bool helper(TreeNode* root, int sum){
         if(root->val==sum) return true;
     }
     return helper(root->left, sum-root->val)|| helper(root->right, sum-root->val);
+    return false;
     
 
 }
