@@ -1,30 +1,29 @@
 class Solution {
-public: 
-    void nthlvl(TreeNode* root, int cn, int n, vector<int> &v){
-        if(root==NULL) return ;
-        if(cn==n){
-            v.push_back(root->val);
-            return;
-        }
-        nthlvl(root->left,cn+1, n, v);
-        nthlvl(root->right,cn+1, n, v);
-    }
-    int levels(TreeNode* root){
-        if(root==NULL) return 0; 
-        return 1+max(levels(root->left), levels(root->right));
-    }
-    void lorder(TreeNode* root, vector<vector<int>> &ans){
-        if(root==NULL) return ;
-        int n=levels(root);
-        for(int i=1; i<=n ;i++){
-            vector<int> v;
-            nthlvl(root,1,i,v);// where i is current lvl, i is tree lvl, v is vector where to store;
-            ans.push_back(v);
-        }
-    }
+public:
     vector<vector<int>> levelOrder(TreeNode* root) {
+        if(root == NULL) return {};
+
         vector<vector<int>> ans;
-        lorder(root,ans);
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while(!q.empty()){
+            int size = q.size();        // ✅ current level size
+            vector<int> level;          // ✅ store this level
+
+            for(int i = 0; i < size; i++){
+                TreeNode* temp = q.front();
+                q.pop();
+
+                level.push_back(temp->val);   // ✅ same level
+
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
+            }
+
+            ans.push_back(level);   // ✅ push full level
+        }
+
         return ans;
     }
 };
