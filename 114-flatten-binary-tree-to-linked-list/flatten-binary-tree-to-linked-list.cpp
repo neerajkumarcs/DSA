@@ -18,11 +18,5 @@ public:
             ans[i]->right = ans[i + 1];
             ans[i]->left = NULL;
         }
-
-        // // last node fix
-        // if(ans.size() > 0){
-        //     ans.back()->left = NULL;
-        //     ans.back()->right = NULL;
-        //}
     }
 };
