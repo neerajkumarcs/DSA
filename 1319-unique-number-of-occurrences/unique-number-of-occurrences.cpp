@@ -12,7 +12,9 @@ public:
         for(auto ele: m){
             int freq=ele.second;// show frequency
             if(s.find(freq)!=s.end()) return false ;
-            else s.insert(freq);
+            else {
+                s.insert(freq);
+            }
         }
         return true;
     }
