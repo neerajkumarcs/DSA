@@ -11,8 +11,8 @@ public:
         unordered_set<int> s;
         for(auto ele: m){
             int freq=ele.second;// show frequency
-            if(s.find(ele.second)!=s.end()) return false ;
-            else s.insert(ele.second);
+            if(s.find(freq)!=s.end()) return false ;
+            else s.insert(freq);
         }
         return true;
     }
