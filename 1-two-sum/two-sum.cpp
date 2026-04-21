@@ -9,6 +9,8 @@ public:
             if(m.find(rem)!=m.end()){
                 ans.push_back(m[rem]);
                 ans.push_back(i);
+                return ans;
+                break;
             }
             else m[nums[i]]=i; //  inserting the value with index;
         }
