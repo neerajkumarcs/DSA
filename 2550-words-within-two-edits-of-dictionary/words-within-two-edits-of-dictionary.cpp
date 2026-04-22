@@ -12,7 +12,7 @@ public:
                 }
                 if(diff<=2) {
                     ans.push_back(q);
-                    break;
+                     break;
                 }
             }
         }
