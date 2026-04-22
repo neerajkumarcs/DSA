@@ -1,24 +1,21 @@
 class Solution {
 public:
     vector<string> twoEditWords(vector<string>& queries, vector<string>& dictionary) {
+        // i am going to trying brute force method
         vector<string> ans;
-
-        for (auto &q : queries) {
-            for (auto &d : dictionary) {
-                int diff = 0;
-
-                for (int i = 0; i < q.size(); i++) {
-                    if (q[i] != d[i]) diff++;
-                    if (diff > 2) break;
+        for(auto &q: queries){
+            for(auto &d: dictionary){
+            int diff=0;
+                for(int i=0; i<q.size(); i++){
+                    if(q[i]!=d[i]) diff++;
+                    if(diff>2) break;
                 }
-
-                if (diff <= 2) {
+                if(diff<=2) {
                     ans.push_back(q);
-                    break; // no need to check further dictionary words
+                    break;
                 }
             }
         }
-
         return ans;
     }
 };
