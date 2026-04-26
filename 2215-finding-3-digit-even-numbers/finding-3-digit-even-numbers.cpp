@@ -1,24 +1,30 @@
 class Solution {
 public:
     vector<int> findEvenNumbers(vector<int>& digits) {
-        vector<int> freq(10, 0);
-        for (int d : digits) freq[d]++;
-
-        vector<int> result;
-
-        // check all 3-digit even numbers
-        for (int num = 100; num <= 999; num += 2) {
-            int a = num / 100;
-            int b = (num / 10) % 10;
-            int c = num % 10;
-
-            vector<int> temp = freq;
-
-            if (temp[a]-- > 0 && temp[b]-- > 0 && temp[c]-- > 0) {
-                result.push_back(num);
-            }
+        vector<int> ans;
+        unordered_map<int, int> m;
+        for(auto x: digits){
+            m[x]++;
         }
-
-        return result;
+        for(int i=100; i<=999; i+=2){
+            int x=i;
+            int a=x%10; x/=10;
+            int b=x%10; x/=10;
+            int c=x%10;
+            if(m[a]>0){
+                m[a]--;
+                    if(m[b]>0){
+                        m[b]--;
+                            if(m[c]>0){
+                                m[c]--;
+                                ans.push_back(i);
+                                m[c]++;
+                            }
+                            m[b]++;
+                    }
+                    m[a]++;
+            }
+    }
+        return ans;
     }
 };
