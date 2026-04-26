@@ -16,11 +16,11 @@ public:
         for(int i=0; i<n; i++){
             int val=(nums[i]-rev(nums[i]));
            if(m.find(val)!=m.end()) {
-            count=count%1000000007;   // 1e9 + 7;
+            count=count%1000000007;
             count+=m[val];
            }
            m[val]++;
         }
-    return count%1000000007;   // 1e9 + 7;
+    return count%1000000007;
     }
 };
