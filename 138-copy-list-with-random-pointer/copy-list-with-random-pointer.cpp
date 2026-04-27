@@ -44,7 +44,6 @@ public:
             Node* o =x.first;
             Node* d= x.second;
            if(o->random){
-            Node* orandeom=o->random;
             Node* drandom=m[o->random];
             d->random=drandom;
            }
