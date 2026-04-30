@@ -1,60 +1,86 @@
 class Solution {
-public: TreeNode* first=NULL;
-    void mapping(TreeNode* root,unordered_map<TreeNode*, TreeNode*> &parent ){
-        if(root==NULL) return ;
-        if(root->left) parent[root->left]=root; // key child with parent 
-        if(root->right) parent[root->right]=root;// key child with parent 
+public:
+    TreeNode* first = NULL;  // will store the starting node
+
+    // Step 1: Create child → parent mapping
+    void mapping(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parent) {
+        if (!root) return;
+
+        // If left child exists, map it to its parent
+        if (root->left) parent[root->left] = root;
+
+        // If right child exists, map it to its parent
+        if (root->right) parent[root->right] = root;
+
+        // Traverse left and right subtree
         mapping(root->left, parent);
         mapping(root->right, parent);
     }
-    void find(TreeNode* root, int start){
-        if(root==NULL) return ;
-        if(root->val==start) first=root;
+
+    // Step 2: Find the node from where fire starts
+    void find(TreeNode* root, int start) {
+        if (!root) return;
+
+        // If current node matches start value, store it
+        if (root->val == start) first = root;
+
+        // Search in left and right subtree
         find(root->left, start);
-        find (root->right, start);
+        find(root->right, start);
     }
+
     int amountOfTime(TreeNode* root, int start) {
-        if(root==nullptr) return 0;
-        // step 1-> find start node in tree
-         find(root, start);
-        // step->2 mark child parent mapping using hashmap
+        // Edge case: empty tree
+        if (!root) return 0;
+
+        // Step 2: locate the starting node
+        find(root, start);
+
+        // Safety check: if start node not found
+        if (!first) return 0;
+
+        // Step 1: build parent mapping
         unordered_map<TreeNode*, TreeNode*> parent;
         mapping(root, parent);
-        // step-> create an unorederd set to check isvisited
-        unordered_set<TreeNode*> s;
-        s.insert(first);
-        queue<pair<TreeNode*, int>> q;
-        q.push({first,0});
-        int maxlvl=0;
-    // step ->3 do bfs
-    while(q.size()>0){
-        pair<TreeNode*, int> p=q.front();
-        q.pop();
-        int level=p.second;
-        maxlvl=max(maxlvl, level);
-        TreeNode* temp=p.first;
-        // check if left exist
-        if(temp->left){
-            if(s.find(temp->left)==s.end()){
-                q.push({temp->left,level+1});
-                s.insert(temp->left);
+
+        // Step 3: BFS to simulate fire spreading
+        unordered_set<TreeNode*> visited;   // to avoid revisiting nodes
+        queue<pair<TreeNode*, int>> q;      // stores {node, time}
+
+        // Initialize BFS with starting node
+        q.push({first, 0});
+        visited.insert(first);
+
+        int maxTime = 0;  // stores final answer
+
+        // Step 4: BFS traversal
+        while (!q.empty()) {
+            auto [node, time] = q.front();
+            q.pop();
+
+            // Update maximum time
+            maxTime = max(maxTime, time);
+
+            // Spread fire to left child
+            if (node->left && !visited.count(node->left)) {
+                visited.insert(node->left);
+                q.push({node->left, time + 1});
+            }
+
+            // Spread fire to right child
+            if (node->right && !visited.count(node->right)) {
+                visited.insert(node->right);
+                q.push({node->right, time + 1});
+            }
+
+            // Spread fire to parent
+            if (parent.count(node) && !visited.count(parent[node])) {
+                visited.insert(parent[node]);
+                q.push({parent[node], time + 1});
             }
         }
-        // check if right exist
-        if(temp->right){
-            if(s.find(temp->right)==s.end()){
-                q.push({temp->right,level+1});
-                s.insert(temp->right);
-            }
-        }
-    // check if parent exist from child parent map 
-        if(parent.find(temp)!=parent.end()){
-            if(s.find(parent[temp])==s.end()){
-                q.push({parent[temp],level+1});
-                s.insert(parent[temp]);
-            }
-        }
-    }
-    return maxlvl;
+
+        // Step 5: return total time required to burn tree
+        return maxTime;
     }
 };
