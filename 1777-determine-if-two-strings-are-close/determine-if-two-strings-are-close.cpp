@@ -1,40 +1,84 @@
 class Solution {
 public:
     bool closeStrings(string word1, string word2) {
-        if(word1.length()!=word2.length()) return false;
-        // string st1=word1, st2=word2;
-        // sort(st1.begin(), st1.end());
-        // sort(st2.begin(), st2.end());
-        // if(st1!=st2) return false;
-        // return true;
-        unordered_map<char, int> mp1;
-        unordered_map<char, int> mp2;
-        for(int i=0; i<word1.length() ; i++){
-            mp1[word1[i]]++;
-            mp2[word2[i]]++;
+
+        // =========================
+        // STEP 0: Basic Check
+        // =========================
+        // If lengths are different → impossible to make them same
+        if (word1.length() != word2.length()) return false;
+
+
+        // =========================
+        // STEP 1: Count frequency of each character
+        // =========================
+        // mp1 and mp2 store:
+        // character → frequency
+        unordered_map<char, int> mp1, mp2;
+
+        for (int i = 0; i < word1.length(); i++) {
+            mp1[word1[i]]++;   // count chars in word1
+            mp2[word2[i]]++;   // count chars in word2
         }
-        // compare mp1 and mp2 just ele.first(characters)
-        for(auto x: mp1){ // just to check all letters present in both words
-            char ch=x.first;
-            if(mp2.find(ch)==mp2.end()) return false;
+
+
+        // =========================
+        // STEP 2: Check same set of characters
+        // =========================
+        // IMPORTANT:
+        // You can swap frequencies, BUT you cannot introduce new characters
+        // So both strings must contain same unique characters
+
+        for (auto x : mp1) {
+            char ch = x.first;
+
+            // if this character does NOT exist in word2 → impossible
+            if (mp2.find(ch) == mp2.end()) return false;
         }
-        unordered_map<int, int> mp3;
-        unordered_map<int, int> mp4;
-        for(auto x:mp1){
-            int freq=x.second;
-            mp3[freq]++;
+
+
+        // =========================
+        // STEP 3: Build "frequency of frequency" maps
+        // =========================
+        // mp3 / mp4 store:
+        // frequency → how many characters have this frequency
+
+        unordered_map<int, int> mp3, mp4;
+
+        // For word1
+        for (auto x : mp1) {
+            int freq = x.second;   // frequency of a character
+            mp3[freq]++;           // count how many chars have this freq
         }
-         for(auto x:mp2){
-            int freq=x.second;
+
+        // For word2
+        for (auto x : mp2) {
+            int freq = x.second;
             mp4[freq]++;
         }
-        // now compare mp3 and mp4 
-        for(auto ele: mp3){
-            int key=ele.first;
-            int val=ele.second;
-            if(mp4.find(key)==mp4.end()) return false;
-            if(mp4[key]!=mp3[key]) return false;
+
+
+        // =========================
+        // STEP 4: Compare frequency distributions
+        // =========================
+        // KEY IDEA:
+        // Same frequency must appear same number of times in both strings
+
+        for (auto ele : mp3) {
+            int key = ele.first;    // frequency (like 1,2,3...)
+            int val = ele.second;   // how many chars have this freq
+
+            // Case 1: frequency doesn't exist in word2
+            if (mp4.find(key) == mp4.end()) return false;
+
+            // Case 2: frequency exists but count mismatch
+            if (mp4[key] != mp3[key]) return false;
         }
+
+
+        // =========================
+        // FINAL RESULT
+        // =========================
         return true;
     }
 };
