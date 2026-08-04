@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n=height.size();
+
+        // step 1: previous gretest element
+        vector<int> v1(n);
+        v1[0]=-1;
+        int mx=height[0];
+        for(int i=1; i<n;i++){
+            v1[i]=mx;
+            if(height[i]>mx) {
+                mx=height[i];
+            }
+        }
+
+        // step 2: next greatest element;
+        vector<int> v2(n);
+        v2[n-1]=-1;
+        int gx=height[n-1];
+        for(int i=n-2;i>=0; i--){
+            v2[i]=gx;
+            if(height[i]>gx){
+                gx=height[i];
+            }
+        }
+
+        // step 3: minimum between pge and nge
+        for(int i=1; i<n-1; i++){
+            v1[i]=min(v1[i],v2[i]);
+        }
+        
+        // step 4: difference between min array and height
+        for(int i=1; i<n-1;i++){
+           if(height[i]<v1[i])  height[i]=(v1[i]-height[i]);
+        }
+
+
+        // step 5: total water we can save 
+        int trapwater=0;
+        for(int i=1; i<n-1; i++){
+            trapwater+=height[i];
+        }
+
+        return trapwater;
+    }
+};
