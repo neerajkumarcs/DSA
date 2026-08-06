@@ -26,6 +26,7 @@ public:
                 }
             }
         }
+            // step 3-> now add according to binary nummber
             int sum=0;
             for(int i=m-1; i>=0; i--){
                 int x=1;
