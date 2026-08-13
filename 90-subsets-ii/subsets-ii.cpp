@@ -6,6 +6,7 @@ public:
 
         sort(nums.begin(), nums.end());
 
+        // Generate all 2^n subsets
         for(int k = 0; k < (1 << n); k++) {
             vector<int> t;
 
@@ -18,6 +19,7 @@ public:
             v.push_back(t);
         }
 
+        // Remove duplicate subsets
         sort(v.begin(), v.end());
         v.erase(unique(v.begin(), v.end()), v.end());
 
