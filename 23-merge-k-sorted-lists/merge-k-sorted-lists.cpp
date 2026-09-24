@@ -1,41 +1,49 @@
-
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-ListNode* merge(ListNode* list1, ListNode* list2) {
-    ListNode* tempA=list1;
-        ListNode* tempB=list2;
-        ListNode* list3=new ListNode(100);
-        ListNode* tempC=list3;
-        while(tempA!=NULL && tempB!=NULL){
-            if(tempA->val<=tempB->val){
-                tempC->next=tempA;
-                tempC=tempA;
-                tempA=tempA->next;
+    ListNode* merge(ListNode* a,ListNode* b){
+        ListNode* tempa=a;
+        ListNode* tempb=b;
+        ListNode* c=new ListNode(-1);
+        ListNode* temp=c;
+        while(tempa && tempb){
+            if(tempa->val<tempb->val){
+            temp->next=tempa;
+            temp=tempa;
+            tempa=tempa->next;
             }
             else{
-                tempC->next=tempB;
-                tempC=tempB;
-                tempB=tempB->next;
+            temp->next=tempb;
+            temp=tempb;
+            tempb=tempb->next;
             }
         }
-            if(tempA==NULL){
-                tempC->next=tempB;
-            }
-            else{
-                tempC->next=tempA;
-            }
-        return list3->next;
+        if(tempa==NULL) temp->next=tempb;
+        else temp->next=tempa;
+        return c->next;
+
     }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.size()==0) return NULL;
-        while(lists.size()>1){
-            ListNode* a=lists[0];
-            lists.erase(lists.begin()); // yaha pe main pahle list ko vector se out krke erase kr rha hu
-            ListNode* b=lists[0];
-            lists.erase(lists.begin());// yaha pe main pahle list ko vector se out krke erase kr rha hu
-            ListNode* c=merge(a,b); 
-            lists.push_back(c);
-        }
-        return lists[0];
+    if(lists.size()==0) return NULL;
+    while(lists.size()>1){
+        ListNode* a= lists[0];
+        lists.erase(lists.begin());
+        ListNode* b=lists[0];
+        lists.erase(lists.begin());
+        ListNode* c=merge(a,b);
+        lists.push_back(c);
+        
+    }
+    return lists[0];
+
     }
 };
