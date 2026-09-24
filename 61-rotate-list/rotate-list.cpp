@@ -33,8 +33,8 @@ public:
             b=b->next;
         }
         b->next=head;
-        ListNode* newhead=temp->next;
+        head=temp->next;
         temp->next=NULL;
-        return newhead;
+        return head;
     }
 };
