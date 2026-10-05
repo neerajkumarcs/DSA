@@ -2,7 +2,7 @@ class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
     ListNode* dummy= new ListNode(0);
-    ListNode* temp=dummy;
+    ListNode* temp;
     ListNode* curr=head;
     ListNode* nxt=NULL;
     while(curr){
