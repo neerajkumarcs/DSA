@@ -1,27 +1,20 @@
 class Solution {
 public:
-    void sortColors(vector<int>& v) {
-        // to pass solution
-        int n=v.size();
-        int i=0;
-        int mid=0; 
-        int j=n-1;
-        while(mid<=j){
-            if(v[mid]==2){
-            int temp=v[mid];
-            v[mid]=v[j];
-            v[j]=temp;
-            j--;
+    void sortColors(vector<int>& nums) {
+     int n=nums.size();
+     int right=0;// pointer 1
+     for(int i=0; i<n; i++){
+        if(nums[i]==0){
+            swap(nums[right],nums[i]);
+            right++;
         }
-        else if(v[mid]==0){
-            int temp=v[mid];
-            v[mid]=v[i];
-            v[i]=temp;
-            i++;
-            mid++;
+     }   
+     int last=n-1; // 2nd pointer
+     for(int i=n-1; i>=right; i--){
+        if(nums[i]==2){
+            swap(nums[i],nums[last]);
+            last--;
         }
-        else mid++;
-        }
-    return ;
+     }
     }
 };
