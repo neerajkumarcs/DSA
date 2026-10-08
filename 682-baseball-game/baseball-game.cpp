@@ -9,9 +9,8 @@ public:
         }
         else if(operations[i]=="C") s.pop();
         else if(operations[i]=="D"){
-            if(!s.empty()) {int a=s.top();
+            int a=s.top();
             s.push(a * 2);
-            }
         }
         else {
              int a=s.top();
