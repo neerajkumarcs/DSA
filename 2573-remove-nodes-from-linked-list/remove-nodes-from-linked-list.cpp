@@ -30,7 +30,7 @@ public:
                 curr->next = newhead->next;
                 newhead->next = curr;
             }
-            // no need of else block 
+            // no need of else block bcz already poped at line no 22
         }
 
         return newhead->next;
