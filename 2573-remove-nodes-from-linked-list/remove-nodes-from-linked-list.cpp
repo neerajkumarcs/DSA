@@ -30,6 +30,7 @@ public:
                 curr->next = newhead->next;
                 newhead->next = curr;
             }
+            // no need of else block 
         }
 
         return newhead->next;
