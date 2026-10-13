@@ -4,7 +4,7 @@ public:
         int n = nums.size();
         int pivotidx = -1;
 
-        // 1. Find pivot
+        // Step 1: Find pivot
         for (int i = n - 2; i >= 0; i--) {
             if (nums[i] < nums[i + 1]) {
                 pivotidx = i;
@@ -12,24 +12,25 @@ public:
             }
         }
 
-        // 2. If no pivot → reverse whole array
+        // Step 2: If no pivot, reverse whole array
         if (pivotidx == -1) {
             reverse(nums.begin(), nums.end());
             return;
         }
 
-        // 3. sorting after pivotidx
+        // Step 3: Reverse the suffix
         reverse(nums.begin() + pivotidx + 1, nums.end());
-        // 4. Swap with just larger element (right to left)
-        int i = pivotidx;
-        while (i!=n) {
-            if (nums[i] > nums[pivotidx]) {
-                swap(nums[i], nums[pivotidx]);
+
+        // step 4: find just greater than pivot
+        int j=-1;
+        for(int i=pivotidx+1; i<n; i++){
+            if(nums[i]>nums[pivotidx]){
+                j=i;
                 break;
             }
-            i++;
         }
-     return ;
-        
+        swap(nums[pivotidx],nums[j]);
+        return ;  
+
     }
 };
