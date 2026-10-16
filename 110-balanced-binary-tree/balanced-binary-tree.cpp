@@ -1,15 +1,18 @@
 class Solution {
 public:
-bool ans=true;
-int helper(TreeNode* root){
-    if(root==NULL) return 0;
-    int lh=helper(root->left);
-    int rh=helper(root->right);
-    if(abs(lh-rh)>1) ans =false;
-    return max(lh,rh)+1;
-}
+    int helper(TreeNode* root, bool &ans){
+        if(root==NULL) return 0;
+        int lh=helper(root->left,ans);
+        int rh=helper(root->right,ans);
+        if(abs(lh-rh)>1){
+            ans=false;
+            return 0;
+        }
+        return 1+max(lh,rh);
+    }
     bool isBalanced(TreeNode* root) {
-        helper(root);
-        return ans;
+    bool ans=true;
+    helper(root, ans);
+    return ans;  
     }
 };
