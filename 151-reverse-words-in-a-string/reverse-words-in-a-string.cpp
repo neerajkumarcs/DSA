@@ -18,7 +18,7 @@ public:
                 ans+=temp;
             }
             else{
-            ans=temp+' '+ans;
+            ans.insert(0,temp+" ");
             }
         }
 
