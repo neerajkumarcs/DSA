@@ -1,31 +1,21 @@
 class Solution {
 public:
-// inorder morris traversal 
     vector<int> inorderTraversal(TreeNode* root) {
-    if(root==NULL) return {};
     vector<int> ans;
-    TreeNode* curr=root;
-    while(curr){
-        if(curr->left){ // to find predecessor 
-            TreeNode* pre=curr->left;
-            while(pre->right!=NULL && pre->right!=curr){
-                pre=pre->right;
-            }
-        if(pre->right==NULL){ // when pre-> right reach at dead end (for linking )
-            pre->right=curr;
-            curr=curr->left;
-        }    
-        else{ // when pre->right== curr(for unlinking)
-            pre->right=nullptr;
-            ans.push_back(curr->val);
-            curr=curr->right;
+    stack<TreeNode*> st;
+    TreeNode* node=root;
+    while(st.size()>0 || node!=NULL){
+        if(node){
+            st.push(node);
+            node=node->left;
         }
+        else {
+            TreeNode* temp=st.top();
+            st.pop();
+            ans.push_back(temp->val);
+            node=temp->right;
         }
-    else { // last case when current left==NULL
-        ans.push_back(curr->val);
-        curr=curr->right;
-        }  
-    }  
-         return ans;
+    }   
+    return ans;
     }
 };
