@@ -2,10 +2,17 @@ class Solution {
 public:
     vector<int> ans;
     vector<int> preorderTraversal(TreeNode* root) {
-    if(root==NULL) return {};
-    ans.push_back(root->val);
-    preorderTraversal(root->left); 
-    preorderTraversal(root->right); 
+    // iterative method
+    stack<TreeNode*> s;
+    s.push(root);
+    vector<int> ans;
+    while(!s.empty()){
+        TreeNode* temp=s.top();
+        s.pop();
+        if(temp!=NULL)ans.push_back(temp->val);
+        if(temp!=NULL && temp->right!=NULL)s.push(temp->right);
+        if(temp!=nullptr && temp->left!=NULL) s.push(temp->left);
+    }
     return ans;
     }
 };
