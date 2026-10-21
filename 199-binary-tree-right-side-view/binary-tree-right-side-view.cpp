@@ -1,28 +1,28 @@
 class Solution {
 public:
-    int levels(TreeNode* root){
+    int level(TreeNode* root){
         if(root==NULL) return 0;
-        return 1+max(levels(root->left),levels(root->right));
+        return 1+max(level(root->left),level(root->right));
     }
-    void nthlevel(TreeNode* root,int curr, int level,vector<int>&ans){
+    void nthlvl(TreeNode* root, int curr, int level,vector<int>&ans){
         if(root==NULL) return ;
-        if(curr==level) {
-           ans[curr]=root->val;
-            return ;
+        if(curr==level){
+            ans[curr]=root->val;
+            return;
         }
-        nthlevel(root->left, curr+1, level, ans);
-        nthlevel(root->right, curr+1, level,ans);
+        nthlvl(root->left,curr+1,level,ans);
+        nthlvl(root->right,curr+1,level,ans);
     }
-    void levelorder(TreeNode* root,vector<int> &ans){
-        int n=ans.size();
-        for(int i=0; i<n; i++){
-            nthlevel(root,0,i, ans);
-            cout<<endl;
-        }
+    void lOrder(TreeNode* root,vector<int>& ans){
+    int n=ans.size();  
+    for(int i=0; i<n ;i++){
+        nthlvl(root,0,i,ans);
+    }  
     }
     vector<int> rightSideView(TreeNode* root) {
-        vector<int>ans(levels(root),0);
-        levelorder(root, ans);
-        return ans;
+    int levels=level(root);   
+    vector<int> ans(levels,0);
+    lOrder(root,ans);
+    return ans;
     }
 };
