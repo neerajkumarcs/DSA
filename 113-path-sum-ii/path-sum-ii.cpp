@@ -1,22 +1,22 @@
 class Solution {
 public:
-void helper(TreeNode* root,vector<vector<int>>& result, vector<int>v, int target ){
-    if(root==nullptr) return;
-    if(root->left==NULL && root->right==NULL){
-        if(root->val==target) { // ye base case hai jo check kr rha ki last mei jo value hai wo dono brabar ho and - mei zero ayega 
-            v.push_back(root->val);
-            result.push_back(v);
+    void helper(TreeNode* root, vector<int>v, vector<vector<int>>&ans, int sum){
+        if(root==nullptr) return ;
+        if(root->left==nullptr && root->right==nullptr){
+            if(root->val==sum){
+                v.push_back(root->val);
+                ans.push_back(v);
+            }
+            return;
         }
-        return;
+        v.push_back(root->val);
+        helper(root->left,v,ans,sum-(root->val));
+        helper(root->right,v,ans,sum-(root->val));
     }
-    v.push_back(root->val);
-    helper(root->left,result, v,target-(root->val));
-    helper(root->right,result, v,target-(root->val));
-}
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-       vector<vector<int>> result;
-       vector<int> v;
-       helper(root, result, v, targetSum);
-        return result;
+    vector<vector<int>> ans;
+    vector<int> v;
+    helper(root,v,ans,targetSum);
+    return ans; 
     }
 };
