@@ -1,42 +1,41 @@
 class Solution {
 public:
-    TreeNode* inop(TreeNode* root){
-        // step 1:- go right once 
-        // step 2:- keep going left until dead/ lead occure
-        TreeNode* pre=root->left;
-        while(pre->right!=NULL){
-            pre=pre->right;
+    TreeNode* iop(TreeNode* root){
+        TreeNode* pred=root->left;
+        while(pred->right){
+            pred=pred->right;
+        }
+        return pred;
+    }
+    TreeNode* ios(TreeNode* root){
+        TreeNode* pre=root->right;
+        while(pre->left){
+            pre=pre->left;
         }
         return pre;
     }
-
     TreeNode* deleteNode(TreeNode* root, int key) {
-    if(root==nullptr) return nullptr; // in case of null tree
-    if(root->val==key ){
+    if(root==NULL) return nullptr;
+    if(root->val==key){
+        // case 1 ->for leaf node
+        if(root->left==NULL && root->right==NULL) return NULL;
 
-    // case 1-> No child node (lead node)
-    if(root->left==nullptr && root->right==nullptr) return NULL;
-
-    // case 2-> one child node 
-    if(root->left==NULL || root->right==NULL){
-        if(root->right==NULL) return root->left;
-        else return root->right;
+        // case 2-> only one child
+        if(root->left==NULL || root->right==NULL){
+            if(root->left==NULL) return root->right;
+            else return root->left;
+        } 
+        // case 3-> both childrens are not null
+        if(root->left && root->right){
+            // replace with inorder predececor 
+            TreeNode* pred=iop(root);    
+            root->val=pred->val;
+            root->left=deleteNode(root->left, pred->val);
+        }
     }
-
-    // 2 or more child node 
-    if(root->left && root->right){
-        // step 1:- find inorder  predecessor or succesor of key node 
-        // step 2:- replace key  node with its prede or succe
-        TreeNode* pre=inop(root);
-        root->val=pre->val;
-        // Node* predecessor alwayays at left of key node
-        root->left=deleteNode(root->left, pre->val);
-    }
-    }   
-    else if(root->val>key) { // go to left
-    root->left=deleteNode(root->left, key);
-    }
-    else root->right=deleteNode(root->right, key); // in case root->val< key
+    else if(root->val >key ) root->left=deleteNode(root->left, key);
+    else root->right=deleteNode(root->right, key);
     return root;
+
     }
 };
