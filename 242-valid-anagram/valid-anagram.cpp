@@ -4,22 +4,19 @@ public:
     // solving using hashmap
     if(s.size()!=t.size()) return false;
     unordered_map<char,int> m1;
-    unordered_map<char,int> m2;
     for(int i=0; i<s.size(); i++){
         m1[s[i]]++;
     }    
+    // second method using only one hash map
     for(int i=0; i<t.size(); i++){
-        m2[t[i]]++;
-    }
-    for(auto ele: m1){
-        char ch1=ele.first;
-        int freq=ele.second;
-        if(m2.find(ch1)!=m2.end()){
-            int freq2=m2[ch1];
-            if(freq!=freq2) return false;
+        char ch=t[i];
+        if(m1.find(ch)!=m1.end()){
+            int fre=m1[ch];
+            if(fre>1)m1[ch]--;
+            else m1.erase(ch);
         }
         else return false;
-    }   
-    return true; 
+    }
+    return true;
     }
 };
