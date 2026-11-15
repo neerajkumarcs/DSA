@@ -1,29 +1,40 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+    int n=arr1.size();
+    vector<int> ans(n);
     unordered_map<int, int> m;
-    vector<int> ans;
-    for(int ele: arr1){
-        m[ele]++;
+    for(int i=0; i<n; i++){
+        m[arr1[i]]++; // storing values with their freqencies
     }
-    for(int ele: arr2){
-        while(m[ele]>0){
-            ans.push_back(ele);
-            m[ele]--;
+    int a=0;
+    for(int i=0; i<arr2.size(); i++){
+        if(m.find(arr2[i])!=m.end()){
+         int fre=m[arr2[i]];
+         while(fre>0){
+            arr1[a]=arr2[i];
+            fre--;
+            a++;
+         }
+         m.erase(arr2[i]);
         }
-        m.erase(ele);
     }
+
+    // remaining elements 
     vector<int> temp;
     for(auto x: m){
-        while(x.second > 0){
+        int frq=x.second;
+        while(frq>0){
             temp.push_back(x.first);
-            x.second--;
+            frq--;
         }
     }
-    sort(temp.begin(), temp.end());
-    for(auto x: temp){
-        ans.push_back(x);
+    // sorting remaing elements;
+    sort(temp.begin(),temp.end());
+    for(int i=0; i<temp.size();i++){
+        arr1[a]=temp[i];
+        a++;
     }
-    return ans;
+    return arr1;
     }
 };
