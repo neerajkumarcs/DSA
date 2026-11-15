@@ -1,21 +1,21 @@
 class Solution {
 public:
     int maximumNumberOfStringPairs(vector<string>& words) {
-        int n=words.size();
-        int mxpair=0;
-        unordered_set<string> s;
-        for(int i=0; i<n; i++){
-            s.insert(words[i]); // here all strings in word to store in set
-        }
-        for(int i=0; i<n; i++){
-         string st =words[i];
-         reverse(st.begin(), st.end());
-         if(words[i]==st) continue; //  * Note->here to handle the condition of pallindrome string
-         if(s.find(st)!=s.end()){
-            mxpair++;
+    int n=words.size();
+    unordered_set<string> s;
+    int count=0;
+    for(int i=0; i<n; i++){
+        s.insert(words[i]);
+    }  
+    for(int i=0; i<n; i++){
+        string temp=words[i];
+        reverse(temp.begin(),temp.end());
+        if(temp!=words[i] && s.find(temp)!=s.end()){
+            count++;
+            s.erase(temp);
             s.erase(words[i]);
-         }
         }
-        return mxpair;
+    }  
+    return count;
     }
 };
