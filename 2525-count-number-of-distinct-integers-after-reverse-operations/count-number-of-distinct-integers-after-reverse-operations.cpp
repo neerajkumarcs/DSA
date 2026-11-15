@@ -1,20 +1,22 @@
 class Solution {
 public:
-    int reversenum(int x){
-        int rev=0;
-        while(x>0){
-            rev=rev*10+(x%10);
-            x=x/10;
+    int reverse(int n){
+        int temp=0;
+        while(n>0){
+            temp=temp*10;
+            temp+=n%10;
+            n/=10;
         }
-        return rev;
+        return temp;
     }
     int countDistinctIntegers(vector<int>& nums) {
-        int n=nums.size();
-        unordered_set<int> s;
-        for(int i=0; i<n ; i++){
-          s.insert(nums[i]);
-          s.insert(reversenum(nums[i]));
-        }
-        return s.size();
+    int n=nums.size();
+    unordered_set<int> s;
+    for(int i=0; i<n; i++){
+        s.insert(nums[i]);
+        int rev=reverse(nums[i]);
+        s.insert(rev);
+    }  
+    return s.size();
     }
 };
