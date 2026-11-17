@@ -11,17 +11,18 @@ public:
     }
     int countNicePairs(vector<int>& nums) {
      int n=nums.size();
-     int count=0;
+     long long count=0;
      unordered_map<int,int> m;
     for(int i=0; i<n; i++){
         nums[i]-=rev(nums[i]);
     }   
     for(auto x:nums){
         if(m.find(x)!=m.end()){
-            count=(count+m[x])%1000000007;;
+            count=count%1000000007;
+            count+=m[x];
         }
         m[x]++;
     }
-    return count;
+    return count%1000000007;
     }
 };
