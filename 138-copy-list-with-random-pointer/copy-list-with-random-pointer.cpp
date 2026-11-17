@@ -1,76 +1,43 @@
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
+    // previous method
+    // step 1-> create a deep copy wihtout random pointer 
+    // step 2-> alternate linking 
+    // step 3-> mark pointers
+    // step 4-> remove connctions
 
-        if (head == NULL)
-            return NULL;
-
-        // Step 1: Create copy nodes
-        Node* dummy = new Node(-1);
-        Node* tempc = dummy;
-        Node* temp = head;
-
-        while (temp) {
-            Node* newNode = new Node(temp->val);
-
-            tempc->next = newNode;
-            tempc = tempc->next;
-
-            temp = temp->next;
+    // now using hashmaps
+    Node* dummy=new Node(0);
+    Node* tempc=dummy;
+    Node* temp=head;
+    while(temp){
+        Node* a=new Node(temp->val);
+        tempc->next=a;
+        tempc=tempc->next;
+        temp=temp->next;
+    }
+    Node* b = dummy->next;
+    Node* a = head;
+    // step 2 : make a map of <original,dublicate> 
+    unordered_map<Node*, Node*> m;
+    Node* tempa=a;
+    Node* tempb=b;
+    while(tempa){
+        m[tempa]=tempb;
+        tempa=tempa->next;
+        tempb=tempb->next;
+    }
+    for(auto x: m){
+        Node* o=x.first;
+        Node* d=x.second;
+        if(o->random!=NULL){
+            Node* orandom=o->random;
+            Node* drandom=m[o->random];
+            d->random=drandom;
         }
+    }
 
-        Node* copyHead = dummy->next;
-
-        // Step 2: Make alternate connections
-        // Original -> Copy -> Original -> Copy
-
-        Node* a = head;
-        Node* b = copyHead;
-
-        while (a) {
-
-            Node* nextOriginal = a->next;
-            Node* nextCopy = b->next;
-
-            a->next = b;
-            b->next = nextOriginal;
-
-            a = nextOriginal;
-            b = nextCopy;
-        }
-
-        // Step 3: Set random pointers
-
-        a = head;
-
-        while (a) {
-
-            Node* copyNode = a->next;
-
-            if (a->random != NULL)
-                copyNode->random = a->random->next;
-
-            a = copyNode->next;
-        }
-
-        // Step 4: Separate original and copied list
-
-        a = head;
-        b = copyHead;
-
-        while (a) {
-
-            a->next = b->next;
-
-            if (b->next != NULL)
-                b->next = b->next->next;
-            else
-                b->next = NULL;
-
-            a = a->next;
-            b = b->next;
-        }
-
-        return copyHead;
+    return b;
     }
 };
